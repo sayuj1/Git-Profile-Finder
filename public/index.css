@@ -1,9 +1,9 @@
 .main-container{
     margin: 0 auto;
-    margin-top: 5%;
+    margin-top: 10%;
 }
 body{
-    background-image: url('https://ustvstaticcdn1-a.akamaihd.net/i/channelcover/21299592,orig,r:6.jpg');
+    background-image: url('/images/cc-wallpaper-desktop.png');
     background-size: cover;
 }
 .top-heading{

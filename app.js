@@ -100,7 +100,7 @@ function callback(error, response, body){
     if(!error && response.statusCode == 200){
         const userInfo = JSON.parse(body);
         //console.log(userInfo);
-        res.render("profile", {data: userInfo, url: req.originalUrl});
+        res.render("profile", {data: userInfo, url: req.originalUrl, user: user});
     }
 }
 request(options, callback);
