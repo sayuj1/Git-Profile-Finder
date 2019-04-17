@@ -111,6 +111,9 @@ function callback(error, response, body){
 request(options, callback);
 });
 
+app.get('*', function(req, res){
+    res.render('pagenotfound', {url: req.originalUrl});
+})
 const server = app.listen(3000, function(){
 console.log('server started at port 3000');
 });
