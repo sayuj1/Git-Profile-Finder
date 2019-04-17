@@ -9,14 +9,16 @@ app.use(express.static("public"));
 
 //Routes
 
+//for searching user
 app.get("/", function(req, res){
     //display homepage
-    res.render("index");
+    res.render("index", {url: req.originalUrl});
 });
 
-
-app.get("/show/:user", function(req, res){
-    let user = req.params.user;
+//For showing user list
+app.get("/show/", function(req, res){
+    let user = req.query.user;
+    //console.log(req.originalUrl);
     //console.log(user);
    var options = {
        url: "http://api.github.com/search/users?q="+user+"&page=1&per_page=7",
@@ -30,12 +32,13 @@ app.get("/show/:user", function(req, res){
    };
    function callback(error, response, body){
        if(!error && response.statusCode == 200){
+         //  console.log(req.originalUrl);
           // console.log(body);
           //console.log(response.headers['link']); //getting value of link header
           const page = parse(response.headers['link']);
           console.log(page);
            const userInfo = JSON.parse(body);
-           res.render("show", {data: userInfo, page: page, page_no: '1'});  //https://api.github.com/search/users?q='+user+'&page=2&per_page=5
+           res.render("show", {data: userInfo, page: page, page_no: '1', url: req.originalUrl, user: user});  //https://api.github.com/search/users?q='+user+'&page=2&per_page=5
        }
        else{
            //console.log(req.headers);
@@ -49,9 +52,8 @@ app.get("/show/:user", function(req, res){
    }); */
 });
 
+//for pagination
 app.get("/show/:user/:id", function(req, res){
-    //console.log(req.params.user);
-    //console.log(req.params.id);
     let user = req.params.user;
     let id = req.params.id;
     //console.log(user);
@@ -70,14 +72,14 @@ app.get("/show/:user/:id", function(req, res){
           // console.log(body);
           //console.log(response.headers['link']); //getting value of link header
           const page = parse(response.headers['link']);   //converting link header value in JSON format
-          console.log(page);
            const userInfo = JSON.parse(body);
-           res.render("show", {data: userInfo, page: page, page_no: id});  //https://api.github.com/search/users?q='+user+'&page=2&per_page=5
+           console.log(page);
+           res.render("show", {data: userInfo, page: page, page_no: id, url: req.originalUrl, user: user});  //https://api.github.com/search/users?q='+user+'&page=2&per_page=5
        }
        else{
            //console.log(req.headers);
            //console.log(body);
-           console.log(error);
+         //  console.log(error);
        }
    }
    request(options, callback);

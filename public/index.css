@@ -1,0 +1,31 @@
+.main-container{
+    margin: 0 auto;
+    margin-top: 5%;
+}
+body{
+    background-image: url('https://ustvstaticcdn1-a.akamaihd.net/i/channelcover/21299592,orig,r:6.jpg');
+    background-size: cover;
+}
+.top-heading{
+    color: yellow;
+    
+    font-size: 4em;
+    text-align: center;
+}
+.form-box{
+    margin-left: 25%;
+    width: 100%;
+}
+.small-device{
+    margin: 0 auto;
+    font-size: 2.5rem;
+    text-align: center;
+}
+.small-dev{
+    width: 70%;
+    text-align: center;
+    margin-left: -5%;   
+}
+.small-dev .input-search{
+    margin-bottom: 2%;
+}

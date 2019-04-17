@@ -1,4 +1,10 @@
+<% include partials/header %>
+
 <div class="container">
+        <form action="/show" method="GET">
+            <input type="text" placeholder="Search-User" name="user">
+            <input type="submit" value="Search">
+        </form>
     <h3>Total Results Found: <%= data['total_count']%></h3>
     <% if( data['total_count'] == '0'){ %>
         <div class="alert alert-info" role="alert">
@@ -20,15 +26,21 @@
     <hr> <br>
     <!-- For Pagination -->
 <% }) %>
-<% if(page_no == '1'){ %>
-    <a href="/show/<%=page['next']['q']%>/<%= page['next']['page'] %>">Next</a>
-    <a href="/show/<%=page['last']['q']%>/<%= page['last']['page'] %>">Last</a>
+<% 
+if(page_no == '1'){ %>
+   <% if(page === null){ %>
+        <% }
+        else { %>
+            <a href="/show/<%=page['next']['q']%>/<%= page['next']['page'] %>">Next</a>
+            <a href="/show/<%=page['last']['q']%>/<%= page['last']['page'] %>">Last</a>
+        <% } %>
+    
 <%}
-  else if(page_no*5 >= data['total_count']){ %>
+  else if(page_no*7 >= data['total_count']){ %>
     <a href="/show/<%=page['first']['q']%>/<%= page['first']['page'] %>">First</a>
     <a href="/show/<%=page['prev']['q']%>/<%= page['prev']['page'] %>">Prev</a>
 <%  } 
-   else{ %>
+   else if(page_no != '1' && page_no*7 <= data['total_count']){ %>
     <a href="/show/<%=page['first']['q']%>/<%= page['first']['page'] %>">First</a>
     <a href="/show/<%=page['prev']['q']%>/<%= page['prev']['page'] %>">Prev</a>
     <a href="/show/<%=page['next']['q']%>/<%= page['next']['page'] %>">Next</a>
@@ -37,3 +49,5 @@
 </div>
    <% } %>
 </div>
+
+<% include partials/footer %>
