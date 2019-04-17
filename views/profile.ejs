@@ -1,1 +1,111 @@
-<h1>hi</h1>
+<% include partials/header %>
+<% include partials/search %>
+<br><br>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 offset-md-0 offset-2 col-10">
+                <!--User Basic Info-->
+                    <div class="card" style="width: 18rem;">
+                            <img src="<%= data['avatar_url'] %>" class="card-img-top" alt="...">
+                            <div class="card-body">
+                              <p class="card-text"><strong><%= data['name']%></strong></p>
+                              <p class="card-text"><%= data['login']%></p>
+                              <hr>
+                              <% if(data['bio'] != ''){ %>
+                                <p class="card-text"><%= data['bio']%></p>
+                              <%} %>
+                              <% if(data['company'] != null){ %>
+                                <p class="card-text"><i class="material-icons">
+                                        people
+                                        </i><%= data['company']%></p>
+                              <%} %>
+                              <% if(data['location'] != '' && data['location'] != null){ %>
+                                <p class="card-text"><i class="material-icons">
+                                        location_on
+                                        </i><%= data['location']%></p>
+                              <%} %>
+                              <% if(data['blog'] != ''){ %>
+                                <i class="material-icons">
+                                        all_inclusive
+                                        </i><a href="<%=data['blog'] %>" target="_blank" class="card-text"> <%= data['blog']%></a>
+                              <%} %>
+                                   
+                            </div>
+                          </div>
+            </div>
+            <div class="col-md-8 col-sm-12">
+                <br>
+                <h4 style="color: white;">Repositories</h4>
+                <!--Repo Info-->
+                <div id="repos">
+                        <img src="/images/lg.comet-spinner.gif" alt="" id="image">
+                </div>
+            </div>
+        </div>
+           
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        let user = '<%=data['login']%>';
+        $(document).ready(function(){
+            
+     $.ajax({
+        url:'https://api.github.com/users/'+user+'/repos',
+        beforeSend: function(){
+        $('#image').show();
+    },
+    complete: function(){
+        $('#image').hide();
+    },
+        data:{
+            client_id: 'eb37eae804d2c4b69980',
+            client_secret: '869f459c6e3f3d0f8413e34f1443e6512a70d58a',
+          sort: 'created: asc',
+        }
+      }).done(function(repos){
+        var count = Object.keys(repos).length;
+        if(count!=0){
+            $.each(repos, function(index, repo){
+          $('#repos').append(`
+            <div class="card bg-light">
+                <br>
+              <div class="row">
+                <div class="offset-md-1 offset-1 col-md-4 col-4 card-title">
+                  <strong style="color: dodgerblue;"><a href="${repo.html_url}">${repo.name}</a></strong>:
+                </div>
+                <div class="col-md-4 offset-1 offset-md-3 col-6">
+                  <span class="badge" style="font-size: 15px;"><img src="/images/img_209881.png" alt="" width="15px" height="15px">Forks: ${repo.forks_count}</span>
+                  <span class="badge badge-primary">Watchers: ${repo.watchers_count}</span>
+                </div>
+                </div>
+                <div class="row">
+                    <div class="offset-md-1 offset-1 col-md-5 col-4">
+                            ${repo.description}
+                        </div>
+                <div class="offset-md-2 col-md-4 offset-1 col-6">
+                        <a href="https://github.com/${repo.owner.login}/${repo.name}/archive/master.zip" class="btn btn-success">Clone or Download<i class="material-icons">arrow_drop_down</i> </a>
+                    </div>
+                    </div>
+                    <br><br><br>
+                    <div class="row">
+                    <div class="offset-md-1 offset-1 col-md-4 col-5">
+                    <span>${repo.language}</span> &nbsp;&nbsp; <i class="material-icons">star</i> ${repo.stargazers_count}
+                    </div>
+                <div class="offset-md-3 col-md-4 col-6">
+                  <a href="${repo.html_url}" target="_blank" class="btn btn-dark" style="width: 100%;">View Repo</a><br><br>
+                </div>
+              </div>
+            </div>
+            <br>
+          `);
+        });
+        }
+        else{
+            $('#repos').append(`<div class="alert alert-info" role="alert">
+                   <%= data['login'] %> doesn’t have any public repositories yet.
+</div>`);
+        }
+      });
+    });
+    </script>
+<% include partials/footer %>

@@ -83,8 +83,9 @@ app.get("/show/:user/:id", function(req, res){
    request(options, callback);
 });
 
-app.get("/show/profile/:username", function(req, res){
+app.get("/profile/:username", function(req, res){
 let user = req.params.username;
+//console.log(user);
 var options = {
     url: "https://api.github.com/users/"+user,
     headers:{
@@ -98,7 +99,8 @@ var options = {
 function callback(error, response, body){
     if(!error && response.statusCode == 200){
         const userInfo = JSON.parse(body);
-        res.render("profile", {data: userInfo});
+        //console.log(userInfo);
+        res.render("profile", {data: userInfo, url: req.originalUrl});
     }
 }
 request(options, callback);

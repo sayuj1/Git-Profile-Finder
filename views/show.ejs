@@ -1,41 +1,11 @@
 <% include partials/header %>
-<div class="main-container">
-        <h1 class="d-md-block d-lg-block d-xl-block d-sm-none d-none top-heading">
-            Welcome To Github Profile Finder
-        </h1>
-        <h2 class="top-heading small-device d-md-none d-lg-none d-xl-none d-sm-block d-block">
-                Welcome To Github Profile Finder
-        </h2>
-    <br><br>
-    <div class="container form-box">
-    <form action="/show" method="GET">
-        <div class="row">
-            <div class="col-md-6 col-lg-6 col-xl-6 input-search d-md-block d-lg-block d-xl-block d-sm-none d-none">
-                <input type="text" placeholder="Search-User" name="user" class="form-control btn-lg" required>
-            </div>
-            <div class="col-md-6 col-lg-6 col-xl-6 search-btn d-md-block d-lg-block d-xl-block d-sm-none d-none">
-                <input type="submit" value="Search" class="btn btn-lg btn-secondary search-btn">
-            </div>
-    </div>
-    </form>
-    <form action="/show" method="get">
-    <!-- For Small Devices-->
-    <div class="small-dev">
-            <div class="col-sm-12 col-12 input-search d-md-none d-lg-none d-xl-none d-sm-block d-block">
-                    <input type="text" placeholder="Search-User" name="user" class="form-control btn-lg" required>
-                </div>
-                <div class="col-sm-12 col-12 d-md-none d-lg-none d-xl-none d-sm-block d-block">
-                    <input type="submit" value="Search" class="btn btn-lg btn-secondary btn-block">
-                </div>
-            </div>
-    </form>
-    </div>
+<% include partials/search %>
     <br><br>
     <div class="container">
     <h3 class="result-no">Total Users Found: <span class="badge badge-info"><%= data['total_count']%></span></h3>
     <% if( data['total_count'] == '0'){ %>
         <div class="alert alert-info alert-text" role="alert">
-               Sorry!! :(  We were not able to find any restaurant in this category, Try another Category.
+            We couldn’t find any users matching '<%=user%>'
         </div>
     <% }
     else if(data['total_count'] == ''){ %>
@@ -54,8 +24,8 @@
                           </div>
                           <div class="col-md-8 col-8">
                             <div class="card-body">
-                              <h5 class="card-title"> <strong> Username: </strong> <%= item['login'] %> </h5>
-                              <p class="card-text"> <a class="btn btn-lg btn-outline-primary" href="/show/profile/<%= item['login']%>">View Profile</a> </p>
+                              <h5 class="card-title"> <strong> Username: </strong> <%= item['login'] %> </h5><br>
+                              <p class="card-text"> <a class="btn btn-lg btn-outline-primary" href="/profile/<%=item['login']%>">View Profile</a> </p>
                             </div>
                           </div>
                         </div>
@@ -86,5 +56,4 @@ if(page_no == '1'){ %>
 </div>
    <% } %>
     </div>
-</div>
 <% include partials/footer %>
