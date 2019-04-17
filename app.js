@@ -42,6 +42,7 @@ app.get("/show/", function(req, res){
        else{
            //console.log(req.headers);
            //console.log(body);
+           res.status(500).send();
            console.log(error);
        }
    }
@@ -75,6 +76,7 @@ app.get("/show/:user/:id", function(req, res){
            res.render("show", {data: userInfo, page: page, page_no: id, url: req.originalUrl, user: user});  //https://api.github.com/search/users?q='+user+'&page=2&per_page=5
        }
        else{
+        res.status(500).send();
            //console.log(req.headers);
            //console.log(body);
          //  console.log(error);
@@ -101,6 +103,9 @@ function callback(error, response, body){
         const userInfo = JSON.parse(body);
         //console.log(userInfo);
         res.render("profile", {data: userInfo, url: req.originalUrl, user: user});
+    }
+    else{
+        res.status(500).send();
     }
 }
 request(options, callback);
