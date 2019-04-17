@@ -36,7 +36,6 @@ app.get("/show/", function(req, res){
           // console.log(body);
           //console.log(response.headers['link']); //getting value of link header
           const page = parse(response.headers['link']);
-          console.log(page);
            const userInfo = JSON.parse(body);
            res.render("show", {data: userInfo, page: page, page_no: '1', url: req.originalUrl, user: user});  //https://api.github.com/search/users?q='+user+'&page=2&per_page=5
        }
@@ -73,7 +72,6 @@ app.get("/show/:user/:id", function(req, res){
           //console.log(response.headers['link']); //getting value of link header
           const page = parse(response.headers['link']);   //converting link header value in JSON format
            const userInfo = JSON.parse(body);
-           console.log(page);
            res.render("show", {data: userInfo, page: page, page_no: id, url: req.originalUrl, user: user});  //https://api.github.com/search/users?q='+user+'&page=2&per_page=5
        }
        else{
@@ -83,6 +81,27 @@ app.get("/show/:user/:id", function(req, res){
        }
    }
    request(options, callback);
+});
+
+app.get("/show/profile/:username", function(req, res){
+let user = req.params.username;
+var options = {
+    url: "https://api.github.com/users/"+user,
+    headers:{
+        'user-agent':  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36',
+    },
+    data:{
+        client_id: 'eb37eae804d2c4b69980',
+        client_secret: '869f459c6e3f3d0f8413e34f1443e6512a70d58a'
+    },
+};
+function callback(error, response, body){
+    if(!error && response.statusCode == 200){
+        const userInfo = JSON.parse(body);
+        res.render("profile", {data: userInfo});
+    }
+}
+request(options, callback);
 });
 
 const server = app.listen(3000, function(){
