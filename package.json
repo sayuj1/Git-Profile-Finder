@@ -1,0 +1,17 @@
+{
+  "name": "github-api",
+  "version": "1.0.0",
+  "description": "Github user profile finder",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "sayuj",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "parse-link-header": "^1.0.1",
+    "request": "^2.88.0"
+  }
+}
