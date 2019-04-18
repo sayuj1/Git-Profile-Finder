@@ -40,13 +40,14 @@
             <div class="col-md-8 col-sm-12">
                 <br>
                 <div class="row">
-                  <div class="col-md-3 col-4">
+                  <!-- Repository No. Follower No. Following No.-->
+                  <div class="col-md-3 col-12">
                     <h4 style="color: white;"><span class="badge badge-light">Repositories <span class="badge badge-secondary" id="repo-count"></span></span></h4>
                   </div>
-                  <div class="col-md-2 offset-md-0 col-3" style="margin-left: 10px;">
+                  <div class="col-md-2 offset-md-0 col-4" style="margin-left: 10px;">
                     <h4 style="color: white;"><span class="badge badge-success">Followers <span class="badge badge-light"><%=data['followers']%></span></span></h4>
                   </div>
-                  <div class="col-md-3 offset-md-0 col-3" style="margin-left: 10px;">
+                  <div class="col-md-3 offset-1 offset-md-0 col-3" style="margin-left: 10px;">
                     <h4 style="color: white;"><span class="badge badge-primary">Following <span class="badge badge-light"><%=data['following']%></span></span></h4>
                   </div>
                 </div>
@@ -55,12 +56,11 @@
                         <img src="/images/lg.comet-spinner.gif" alt="" id="image">
                 </div>
             </div>
-        </div>
-           
+        </div> 
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
-        let user = '<%=data['login']%>';
+        let user = '<%=data["login"]%>';
         $(document).ready(function(){
             
      $.ajax({

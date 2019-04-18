@@ -9,17 +9,14 @@ app.use(express.static("public"));
 
 //Routes
 
-//for searching user
+// display homepage
 app.get("/", function(req, res){
-    //display homepage
     res.render("index", {url: req.originalUrl});
 });
 
 //For showing user list
 app.get("/show/", function(req, res){
     let user = req.query.user;
-    //console.log(req.originalUrl);
-    //console.log(user);
    var options = {
        url: "http://api.github.com/search/users?q="+user+"&page=1&per_page=7",
        headers:{
@@ -33,30 +30,24 @@ app.get("/show/", function(req, res){
    function callback(error, response, body){
        if(!error && response.statusCode == 200){
          //  console.log(req.originalUrl);
-          // console.log(body);
           //console.log(response.headers['link']); //getting value of link header
           const page = parse(response.headers['link']);
            const userInfo = JSON.parse(body);
-           res.render("show", {data: userInfo, page: page, page_no: '1', url: req.originalUrl, user: user});  //https://api.github.com/search/users?q='+user+'&page=2&per_page=5
+           res.render("show", {data: userInfo, page: page, page_no: '1', url: req.originalUrl, user: user});  
        }
        else{
            //console.log(req.headers);
-           //console.log(body);
            res.status(500).send();
            console.log(error);
        }
    }
    request(options, callback);
-   /*request('http://api.github.com/search/users?q=sayuj+user:mozilla', function(error, response, body){
-    console.log(body);
-   }); */
 });
 
-//for pagination
+//Showing Search Users with pagination
 app.get("/show/:user/:id", function(req, res){
     let user = req.params.user;
     let id = req.params.id;
-    //console.log(user);
    var options = {
        url: "http://api.github.com/search/users?q="+user+"&page="+id+"&per_page=7",
        headers:{
@@ -69,7 +60,6 @@ app.get("/show/:user/:id", function(req, res){
    };
    function callback(error, response, body){
        if(!error && response.statusCode == 200){
-          // console.log(body);
           //console.log(response.headers['link']); //getting value of link header
           const page = parse(response.headers['link']);   //converting link header value in JSON format
            const userInfo = JSON.parse(body);
@@ -77,14 +67,12 @@ app.get("/show/:user/:id", function(req, res){
        }
        else{
         res.status(500).send();
-           //console.log(req.headers);
-           //console.log(body);
-         //  console.log(error);
        }
    }
    request(options, callback);
 });
 
+// View Profile
 app.get("/profile/:username", function(req, res){
 let user = req.params.username;
 //console.log(user);
@@ -111,9 +99,12 @@ function callback(error, response, body){
 request(options, callback);
 });
 
+// Page Not Found
 app.get('*', function(req, res){
     res.render('pagenotfound', {url: req.originalUrl});
 })
+
+//Server Setup
 const server = app.listen(3000, function(){
 console.log('server started at port 3000');
 });
