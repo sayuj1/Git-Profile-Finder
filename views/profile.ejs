@@ -1,4 +1,7 @@
 <% include partials/header %>
+<div class="container" style="margin-top: 2%;">
+  <button class="btn btn-lg btn-primary" onclick="go_back()">Go back</button>
+</div>
 <% include partials/search %>
 <br><br>
     <div class="container">
@@ -19,6 +22,7 @@
                                         people
                                         </i><%= data['company']%></p>
                               <%} %>
+                              <hr>
                               <% if(data['location'] != '' && data['location'] != null){ %>
                                 <p class="card-text"><i class="material-icons">
                                         location_on
@@ -35,7 +39,17 @@
             </div>
             <div class="col-md-8 col-sm-12">
                 <br>
-                <h4 style="color: white;">Repositories <span class="badge badge-info" id="repo-count"></span></h4>
+                <div class="row">
+                  <div class="col-md-3 col-4">
+                    <h4 style="color: white;"><span class="badge badge-light">Repositories <span class="badge badge-secondary" id="repo-count"></span></span></h4>
+                  </div>
+                  <div class="col-md-2 offset-md-0 col-3" style="margin-left: 10px;">
+                    <h4 style="color: white;"><span class="badge badge-success">Followers <span class="badge badge-light"><%=data['followers']%></span></span></h4>
+                  </div>
+                  <div class="col-md-3 offset-md-0 col-3" style="margin-left: 10px;">
+                    <h4 style="color: white;"><span class="badge badge-primary">Following <span class="badge badge-light"><%=data['following']%></span></span></h4>
+                  </div>
+                </div>
                 <!--Repo Info-->
                 <div id="repos">
                         <img src="/images/lg.comet-spinner.gif" alt="" id="image">
@@ -67,6 +81,12 @@
         if(count!=0){
           $("#repo-count").append(`${count}`);
             $.each(repos, function(index, repo){
+              if(repo.description === null){
+                repo.description = "";
+              }
+              if(repo.language === null){
+                repo.language = "";
+              }
           $('#repos').append(`
             <div class="card bg-light">
                 <br>
@@ -75,7 +95,7 @@
                   <strong style="color: dodgerblue;"><a href="${repo.html_url}">${repo.name}</a></strong>:
                 </div>
                 <div class="col-md-4 offset-1 offset-md-3 col-6">
-                  <span class="badge" style="font-size: 15px;"><img src="/images/img_209881.png" alt="" width="15px" height="15px">Forks: ${repo.forks_count}</span>
+                  <span class="badge" style="font-size: 15px;"><img src="/images/img_209881.png" alt="" width="15px" height="15px"> Forks: ${repo.forks_count}</span>
                   <span class="badge badge-primary">Watchers: ${repo.watchers_count}</span>
                 </div>
                 </div>
@@ -90,7 +110,7 @@
                     <br><br><br>
                     <div class="row">
                     <div class="offset-md-1 offset-1 col-md-4 col-5">
-                    <span>${repo.language}</span> &nbsp;&nbsp; <i class="material-icons">star</i> ${repo.stargazers_count}
+                    <span class="badge badge-primary" style="font-size: 15px;">${repo.language}</span> &nbsp;&nbsp; <i class="material-icons">star</i> ${repo.stargazers_count}
                     </div>
                 <div class="offset-md-3 col-md-4 col-6">
                   <a href="${repo.html_url}" target="_blank" class="btn btn-dark" style="width: 100%;">View Repo</a><br><br>
@@ -109,5 +129,8 @@
         }
       });
     });
+    function go_back(){
+      window.history.back();
+    }
     </script>
 <% include partials/footer %>

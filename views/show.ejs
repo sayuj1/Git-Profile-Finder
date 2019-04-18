@@ -1,4 +1,14 @@
 <% include partials/header %>
+<div class="container" style="margin-top: 2%;">
+  <div class="row">
+    <div class="col-md-2 col-5">
+      <button class="btn btn-lg btn-primary" onclick="go_back()">Go back</button>
+    </div>
+    <div class="col-md-3 offset-md-0 offset-1 col-6">
+      <button class="btn btn-lg btn-primary" onclick="go_forward()">Go forward</button>
+    </div>
+  </div>
+</div>
 <% include partials/search %>
     <br><br>
     <div class="container">
@@ -38,22 +48,44 @@ if(page_no == '1'){ %>
    <% if(page === null){ %>
         <% }
         else { %>
-            <a class="btn btn-primary btn-lg" href="/show/<%=page['next']['q']%>/<%= page['next']['page'] %>">Next</a>
-            <a class="btn btn-primary btn-lg" href="/show/<%=page['last']['q']%>/<%= page['last']['page'] %>">Last</a>
+          <div class="row">
+            <div class="col-md-1 col-4">
+              <a class="btn btn-primary btn-lg" href="/show/<%=page['next']['q']%>/<%= page['next']['page'] %>">Next</a>
+            </div>
+            <div class="col-md-1 offset-md-4 offset-5 col-3">
+              <a class="btn btn-primary btn-lg" href="/show/<%=page['last']['q']%>/<%= page['last']['page'] %>">Last</a>
+            </div>
+          </div>
         <% } %>
     
 <%}
   else if(page_no*7 >= data['total_count']){ %>
-    <a class="btn btn-primary btn-lg" href="/show/<%=page['first']['q']%>/<%= page['first']['page'] %>">First</a>
-    <a class="btn btn-primary btn-lg" href="/show/<%=page['prev']['q']%>/<%= page['prev']['page'] %>">Prev</a>
+    <div class="row">
+      <div class="col-md-1 col-4">
+        <a class="btn btn-primary btn-lg" href="/show/<%=page['first']['q']%>/<%= page['first']['page'] %>">First</a>
+      </div>
+      <div class="col-md-1 offset-md-4 offset-5 col-3">
+        <a class="btn btn-primary btn-lg" href="/show/<%=page['prev']['q']%>/<%= page['prev']['page'] %>">Prev</a>
+      </div>
+    </div>
 <%  } 
    else if(page_no != '1' && page_no*7 <= data['total_count']){ %>
-    <a class="btn btn-primary btn-lg" href="/show/<%=page['first']['q']%>/<%= page['first']['page'] %>">First</a>
-    <a class="btn btn-primary btn-lg" href="/show/<%=page['prev']['q']%>/<%= page['prev']['page'] %>">Prev</a>
-    <a class="btn btn-primary btn-lg" href="/show/<%=page['next']['q']%>/<%= page['next']['page'] %>">Next</a>
-    <a class="btn btn-primary btn-lg" href="/show/<%=page['last']['q']%>/<%= page['last']['page'] %>">Last</a>
+    <div class="row">
+      <div class="col-md-1 col-3"><a class="btn btn-primary btn-lg" href="/show/<%=page['first']['q']%>/<%= page['first']['page'] %>">First</a></div>
+      <div class="col-md-1 col-2" style="margin-left: 4%;"><a class="btn btn-primary btn-lg" href="/show/<%=page['prev']['q']%>/<%= page['prev']['page'] %>">Prev</a></div>
+      <div class="col-md-1 col-3" style="margin-left: 4%;"><a class="btn btn-primary btn-lg" href="/show/<%=page['next']['q']%>/<%= page['next']['page'] %>">Next</a></div>
+      <div class="col-md-1 col-2" style="margin-left: 4%;"><a class="btn btn-primary btn-lg" href="/show/<%=page['last']['q']%>/<%= page['last']['page'] %>">Last</a></div>
+    </div>
     <%} %>
 </div>
    <% } %>
     </div>
+    <script>
+    function go_back(){
+      window.history.back();
+    }
+    function go_forward(){
+      window.history.forward();
+    }
+    </script>
 <% include partials/footer %>
