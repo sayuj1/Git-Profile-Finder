@@ -35,7 +35,7 @@
             </div>
             <div class="col-md-8 col-sm-12">
                 <br>
-                <h4 style="color: white;">Repositories</h4>
+                <h4 style="color: white;">Repositories <span class="badge badge-info" id="repo-count"></span></h4>
                 <!--Repo Info-->
                 <div id="repos">
                         <img src="/images/lg.comet-spinner.gif" alt="" id="image">
@@ -65,6 +65,7 @@
       }).done(function(repos){
         var count = Object.keys(repos).length;
         if(count!=0){
+          $("#repo-count").append(`${count}`);
             $.each(repos, function(index, repo){
           $('#repos').append(`
             <div class="card bg-light">
@@ -101,6 +102,7 @@
         });
         }
         else{
+          $("#repo-count").append(`${count}`);
             $('#repos').append(`<div class="alert alert-info" role="alert">
                    <%= data['login'] %> doesn’t have any public repositories yet.
 </div>`);
