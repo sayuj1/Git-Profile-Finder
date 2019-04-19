@@ -14,8 +14,7 @@ Feel free to open issues for questions/improvements!
 - "ejs": "^2.6.1",
 - "express": "^4.16.4",
 - "parse-link-header": "^1.0.1",
-- "request": "^2.88.0",
-- "semantic-ui-search": "^2.3.3"
+- "request": "^2.88.0"
  
  ### Build With
  - Express Js
